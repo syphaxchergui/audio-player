@@ -1,0 +1,11 @@
+.container-playlist {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 360px;
+  text-align: center;
+  flex-grow: 1;
+  background-color: #f4f5f7;
+  object-fit: fill;
+}

@@ -3,6 +3,7 @@ import { Panel } from "rsuite";
 import ReactAudioPlayer from "react-audio-player";
 import ApiMiddleware from "../../core/API";
 import { Loader } from "rsuite";
+import "./style.css";
 
 const Player = ({ id }) => {
   const [data, setData] = React.useState();
@@ -25,58 +26,27 @@ const Player = ({ id }) => {
     if (id) getData();
   }, [id]);
 
-  if (!id)
-    return (
-      <Panel
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          backgroundColor: "#f4f5f7",
-          alignItems: "center",
-          justifyContent: "center",
-          height: 360,
-          textAlign: "center",
-          flexGrow: 1,
-        }}
-        bordered
-      >
-        <h4>Selectionnez une chanson</h4>
-      </Panel>
-    );
+  if (!id) return null;
   if (!data) return <Loader center content="loading" />;
   return (
-    <Panel
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        backgroundColor: "#f4f5f7",
-        alignItems: "center",
-        justifyContent: "center",
-        height: 360,
-        textAlign: "center",
-        flexGrow: 1,
-      }}
-      bordered
-    >
+    <div className="container">
       <img
-        style={{
-          width: "12rem",
-          height: "8rem",
-          borderRadius: 12,
-          backgroundColor: "grey",
-          marginBottom: "0.5rem ",
-          objectFit: "cover",
-          marginTop: "1rem",
-        }}
+        className="img-player"
         src={
           "http://res.cloudinary.com/adwiya/image/upload/v1669719057/o3dp0qhkfqhe898p9ber.jpg"
         }
         alt={data.filename}
       />
-      <h4>{data.filename}</h4>
-      <p>Slimane Chabi</p>
-      <hr />
-
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          marginRight: "2rem",
+        }}
+      >
+        <h6>{data.filename}</h6>
+        <p>Slimane Chabi</p>
+      </div>
       <ReactAudioPlayer
         src={`http://localhost:5000/api/tracks/${id}`}
         controls={canPlay}
@@ -87,9 +57,11 @@ const Player = ({ id }) => {
         onAbort={() => {
           setCanPlay(false);
         }}
+        style={{ minWidth: 400, flexGrow: 1, height: "3rem" }}
       />
+
       {!canPlay && <Loader size="sm" content="Chargement..." />}
-    </Panel>
+    </div>
   );
 };
 

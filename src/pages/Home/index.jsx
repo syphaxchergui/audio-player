@@ -8,11 +8,14 @@ import Player from "../../components/Player";
 import { IconButton, Table, Grid, Row, Col, FlexboxGrid } from "rsuite";
 import PlayIcon from "@rsuite/icons/legacy/Play";
 import Loading from "../../components/Loading";
+import Playlists from "../../components/Playlists";
+import { usePlayer } from "../../context/PlayerContext";
 const { Column, HeaderCell, Cell } = Table;
 
 const Home = () => {
   const [data, setData] = React.useState();
   const [track, setTrack] = React.useState();
+  const { actions: player } = usePlayer();
 
   React.useEffect(() => {
     const getData = async () => {
@@ -36,15 +39,15 @@ const Home = () => {
   return (
     <>
       <Grid fluid style={{ marginBottom: "2rem" }}>
-        <Col xs={24} sm={16}>
+        <Col sx={24} sm={24} md={24} lg={16}>
           <section className="section-l">
-            <h4 className="horizontal-l">Chansons populaires !</h4>
+            <h3 className="horizontal-l">Chansons populaires !</h3>
             <Table
               autoHeight
               data={data.tracks}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", marginBottom: "1rem" }}
               onRowClick={(rowData) => {
-                setTrack(rowData._id);
+                player.playTrack(rowData._id);
               }}
             >
               {/* <Column width={60}>
@@ -118,14 +121,14 @@ const Home = () => {
             </Table>
           </section>
         </Col>
-        <Col xs={24} sm={8}>
+        <Col sx={24} sm={24} md={24} lg={8}>
           <section className="section-r">
-            <Player className="horizontal-r" id={track} />
+            <Playlists className="horizontal-r" />
           </section>
         </Col>
       </Grid>
-      <h4>Explore Albums !</h4>
-      <FlexboxGrid justify="space-between">
+      <h3>Explore Albums </h3>
+      <FlexboxGrid justify={data.albums.length < 5 ? "start" : "space-between"}>
         {data.albums.map((item) => (
           <FlexboxGrid.Item as={Col}>
             <Album {...item} key={item._id} />

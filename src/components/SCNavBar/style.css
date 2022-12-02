@@ -1,0 +1,27 @@
+.nav {
+  flex-grow: 1;
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 0px 10px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.container-nav {
+  max-width: 1224px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.nav-item {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 2rem;
+}

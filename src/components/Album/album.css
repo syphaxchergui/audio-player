@@ -2,13 +2,21 @@
   display: flex;
   flex-direction: column;
   margin-top: 1rem;
+  margin-right: 1rem;
   width: 12rem;
+  background: rgba(255, 255, 255, 0.25);
+  padding: 1rem;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .img-album:hover {
   transform: scale(1.02);
   transition: all 0.3s ease-in-out;
-  -webkit-filter: brightness(80%);
+  filter: brightness(80%);
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;

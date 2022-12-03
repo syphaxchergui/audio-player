@@ -1,25 +1,20 @@
 import React from "react";
-import { Navbar, Nav } from "rsuite";
+import { Navbar, Nav, Button } from "rsuite";
 import { AutoComplete, InputGroup } from "rsuite";
 import SearchIcon from "@rsuite/icons/Search";
 import DashboardIcon from "@rsuite/icons/legacy/Dashboard";
-import AddOutlineIcon from "@rsuite/icons/AddOutline";
 import ExploreIcon from "@rsuite/icons/Explore";
-import VisibleIcon from "@rsuite/icons/Visible";
 import PlayOutlineIcon from "@rsuite/icons/PlayOutline";
-import ListIcon from "@rsuite/icons/List";
-import UserInfoIcon from "@rsuite/icons/UserInfo";
-import { usePlayer } from "../../context/PlayerContext";
-import Player from "../Player";
 import "./style.css";
 import { MAX_WIDTH } from "../../constants";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const styles = {
   width: 300,
 };
 
 const data = [];
 const SCNavBar = () => {
+  const navigate = useNavigate();
   return (
     <Navbar appearance="subtle" className="nav">
       <div className="container-nav" style={{ maxWidth: MAX_WIDTH }}>
@@ -27,7 +22,7 @@ const SCNavBar = () => {
           <Link to="/">
             <img
               src={require("../../assets/logo.png")}
-              style={{ height: 56, marginLeft: "1rem" }}
+              style={{ height: 32, marginTop: 12, marginLeft: "1rem" }}
             />
           </Link>
         </Nav>
@@ -42,14 +37,34 @@ const SCNavBar = () => {
         </Nav>
 
         <Nav pullRight>
-          <Nav.Item icon={<ExploreIcon />}>
-            <Link to="/">Explore</Link>
+          <Nav.Item
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/");
+            }}
+            icon={<ExploreIcon />}
+          >
+            {/* <Link to="/">Explore</Link> */}
+            Explore
           </Nav.Item>
-          <Nav.Item icon={<DashboardIcon />}>
-            <Link to="/albums">Albums</Link>
+
+          <Nav.Item
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/albums");
+            }}
+            icon={<DashboardIcon />}
+          >
+            Albums
           </Nav.Item>
-          <Nav.Item icon={<PlayOutlineIcon />}>
-            <Link to="/tracks">Tracks</Link>
+          <Nav.Item
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/tracks");
+            }}
+            icon={<PlayOutlineIcon />}
+          >
+            Tracks
           </Nav.Item>
           {/* <Nav.Item icon={<UserInfoIcon />}>Login</Nav.Item> */}
         </Nav>

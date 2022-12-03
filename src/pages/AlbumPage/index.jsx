@@ -1,12 +1,13 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { Col, Grid, Panel, Table } from "rsuite";
+import { IconButton, Col, Grid, Panel, Table } from "rsuite";
 import Loading from "../../components/Loading";
-
+import PlayOutlineIcon from "@rsuite/icons/PlayOutline";
 import { useNotifications } from "../../context/NotificationContext";
 import { usePlayer } from "../../context/PlayerContext";
 import ApiMiddleware from "../../core/API";
 import "./styles.css";
+import RandomIcon from "@rsuite/icons/Random";
 const { Column, HeaderCell, Cell } = Table;
 
 const AlbumPage = () => {
@@ -81,11 +82,26 @@ const AlbumPage = () => {
         </Col>
 
         <Col className="section-info">
-          <h2>{data.album.title}</h2>
-          <p>
-            {data.album.artistId.firstName} {data.album.artistId.lastName} |{" "}
-            {data.album.year}
-          </p>
+          <div>
+            <h2>{data.album.title}</h2>
+            <p>
+              {data.album.artistId.firstName} {data.album.artistId.lastName} |{" "}
+              {data.album.year}
+            </p>
+          </div>
+          <div>
+            <IconButton className="btn" icon={<RandomIcon />} placement="right">
+              Shuffle
+            </IconButton>
+            <IconButton
+              className="btn"
+              appearance="primary"
+              icon={<PlayOutlineIcon />}
+              placement="right"
+            >
+              Play
+            </IconButton>
+          </div>
         </Col>
       </Grid>
       <section className="section-tacks">
@@ -120,8 +136,12 @@ const AlbumPage = () => {
           </Column>
 
           <Column>
-            <HeaderCell>Duree</HeaderCell>
-            <Cell dataKey="length" />
+            <HeaderCell>Taille</HeaderCell>
+            <Cell>
+              {(rowData) => (
+                <p>{Math.floor(rowData.length / (1024 * 1024))} Mo</p>
+              )}
+            </Cell>
           </Column>
         </Table>
       </section>

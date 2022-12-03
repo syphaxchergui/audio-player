@@ -19,8 +19,17 @@
 
 .section-info {
   margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 9.5rem;
 }
 
 .section-tacks {
   margin-top: 2rem;
+}
+
+.btn {
+  margin-right: 0.75rem;
+  width: 8rem;
 }

@@ -138,8 +138,12 @@ const Home = () => {
               </Column>
 
               <Column>
-                <HeaderCell>Duree</HeaderCell>
-                <Cell dataKey="length" />
+                <HeaderCell>Taille</HeaderCell>
+                <Cell>
+                  {(rowData) => (
+                    <p>{Math.floor(rowData.length / (1024 * 1024))} Mo</p>
+                  )}
+                </Cell>
               </Column>
             </Table>
           </section>

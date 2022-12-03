@@ -5,7 +5,7 @@ const Album = ({ _id, cover, title, artistId, year, slug }) => {
   return (
     <div className="album-container">
       <Link to={`/albums/${slug}`}>
-        <img loading="lazy" className="img-album" src={cover} />
+        <img loading="lazy" className="img-album" src={cover} alt={title} />
       </Link>
 
       <div style={{ paddingLeft: "0.5rem", paddingRight: "0.5rem" }}>

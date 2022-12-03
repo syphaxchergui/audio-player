@@ -5,6 +5,7 @@ import SCNavBar from "../../components/SCNavBar";
 import { Container, Header, Content, Footer, Sidebar } from "rsuite";
 import Player from "../../components/Player";
 import { usePlayer } from "../../context/PlayerContext";
+import { MAX_WIDTH } from "../../constants";
 
 const Layout = () => {
   const { trackId } = usePlayer();
@@ -16,7 +17,7 @@ const Layout = () => {
       <Content
         style={{
           padding: "1rem",
-          maxWidth: 1224,
+          maxWidth: MAX_WIDTH,
           margin: "0 auto",
           marginBottom: "6rem",
           marginTop: 80,

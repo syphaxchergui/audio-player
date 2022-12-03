@@ -12,6 +12,8 @@ import UserInfoIcon from "@rsuite/icons/UserInfo";
 import { usePlayer } from "../../context/PlayerContext";
 import Player from "../Player";
 import "./style.css";
+import { MAX_WIDTH } from "../../constants";
+import { Link } from "react-router-dom";
 const styles = {
   width: 300,
 };
@@ -20,12 +22,14 @@ const data = [];
 const SCNavBar = () => {
   return (
     <Navbar appearance="subtle" className="nav">
-      <div className="container-nav">
+      <div className="container-nav" style={{ maxWidth: MAX_WIDTH }}>
         <Nav>
-          <img
-            src={require("../../assets/logo.png")}
-            style={{ height: 56, marginLeft: "1rem" }}
-          />
+          <Link to="/">
+            <img
+              src={require("../../assets/logo.png")}
+              style={{ height: 56, marginLeft: "1rem" }}
+            />
+          </Link>
         </Nav>
         <Nav className="nav-item">
           <InputGroup style={styles}>
@@ -38,10 +42,16 @@ const SCNavBar = () => {
         </Nav>
 
         <Nav pullRight>
-          <Nav.Item icon={<ExploreIcon />}>Explore</Nav.Item>
-          <Nav.Item icon={<DashboardIcon />}>Albums</Nav.Item>
-          <Nav.Item icon={<PlayOutlineIcon />}>Tracks</Nav.Item>
-          <Nav.Item icon={<UserInfoIcon />}>Login</Nav.Item>
+          <Nav.Item icon={<ExploreIcon />}>
+            <Link to="/">Explore</Link>
+          </Nav.Item>
+          <Nav.Item icon={<DashboardIcon />}>
+            <Link to="/albums">Albums</Link>
+          </Nav.Item>
+          <Nav.Item icon={<PlayOutlineIcon />}>
+            <Link to="/tracks">Tracks</Link>
+          </Nav.Item>
+          {/* <Nav.Item icon={<UserInfoIcon />}>Login</Nav.Item> */}
         </Nav>
       </div>
     </Navbar>

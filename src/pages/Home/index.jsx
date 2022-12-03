@@ -5,36 +5,59 @@ import ReactAudioPlayer from "react-audio-player";
 import ApiMiddleware from "../../core/API";
 import "./home.css";
 import Player from "../../components/Player";
-import { IconButton, Table, Grid, Row, Col, FlexboxGrid } from "rsuite";
+import { IconButton, Table, Grid, Row, Col, FlexboxGrid, Panel } from "rsuite";
 import PlayIcon from "@rsuite/icons/legacy/Play";
 import Loading from "../../components/Loading";
 import Playlists from "../../components/Playlists";
 import { usePlayer } from "../../context/PlayerContext";
+import { Link } from "react-router-dom";
+import { useNotifications } from "../../context/NotificationContext";
+import { MAX_WIDTH } from "../../constants";
 const { Column, HeaderCell, Cell } = Table;
 
 const Home = () => {
   const [data, setData] = React.useState();
   const [track, setTrack] = React.useState();
+  const [loading, setLoading] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState();
   const { actions: player } = usePlayer();
+  const { actions: notify } = useNotifications();
 
   React.useEffect(() => {
     const getData = async () => {
       try {
+        setLoading(true);
         const result = await ApiMiddleware.get("explore");
         console.log(result);
         if (result.data.success) {
           setData(result.data);
+          //notify.success(result.data.message);
         } else {
+          notify.info(result.data.message);
+          setErrorMessage(
+            result.data.message + " | Erreur code " + result.status
+          );
         }
+        setLoading(false);
       } catch (err) {
         console.log(err);
+        notify.error(err.message);
+        setErrorMessage(err.message);
+        setLoading(false);
       }
     };
 
     getData();
   }, []);
 
-  if (!data) return <Loading />;
+  if (loading) return <Loading />;
+
+  if (!data)
+    return (
+      <Panel style={{ width: MAX_WIDTH }} bordered header={`Erreur`}>
+        <p>{errorMessage}</p>
+      </Panel>
+    );
 
   return (
     <>
@@ -127,7 +150,11 @@ const Home = () => {
           </section>
         </Col>
       </Grid>
-      <h3>Explore Albums </h3>
+      <div className="row-titles">
+        <h3>Explore Albums </h3>
+        <Link to="/albums">Voir plus</Link>
+      </div>
+
       <FlexboxGrid justify={data.albums.length < 5 ? "start" : "space-between"}>
         {data.albums.map((item) => (
           <FlexboxGrid.Item as={Col}>

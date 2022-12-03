@@ -7,6 +7,7 @@ import "./style.css";
 
 const Player = ({ id }) => {
   const [data, setData] = React.useState();
+  const [album, setAlbum] = React.useState();
   const [canPlay, setCanPlay] = React.useState(false);
 
   React.useEffect(() => {
@@ -16,6 +17,7 @@ const Player = ({ id }) => {
 
         if (result.data.success) {
           setData(result.data.track);
+          setAlbum(result.data.album);
         } else {
         }
       } catch (err) {
@@ -27,16 +29,10 @@ const Player = ({ id }) => {
   }, [id]);
 
   if (!id) return null;
-  if (!data) return <Loader center content="loading" />;
+  if (!data || !album) return <Loader center content="loading" />;
   return (
     <div className="container">
-      <img
-        className="img-player"
-        src={
-          "http://res.cloudinary.com/adwiya/image/upload/v1669719057/o3dp0qhkfqhe898p9ber.jpg"
-        }
-        alt={data.filename}
-      />
+      <img className="img-player" src={album.cover} alt={data.filename} />
       <div
         style={{
           display: "flex",
@@ -45,7 +41,7 @@ const Player = ({ id }) => {
         }}
       >
         <h6>{data.filename}</h6>
-        <p>Slimane Chabi</p>
+        <p>{album.artistId.firstName + " " + album.artistId.lastName}</p>
       </div>
       <ReactAudioPlayer
         src={`http://localhost:5000/api/tracks/${id}`}
@@ -57,7 +53,7 @@ const Player = ({ id }) => {
         onAbort={() => {
           setCanPlay(false);
         }}
-        style={{ minWidth: 400, flexGrow: 1, height: "3rem" }}
+        style={{ minWidth: 200, flexGrow: 1, height: "3rem" }}
       />
 
       {!canPlay && <Loader size="sm" content="Chargement..." />}

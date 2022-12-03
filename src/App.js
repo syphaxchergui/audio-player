@@ -5,6 +5,7 @@ import NotFound from "./pages/NotFound/index";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "rsuite/dist/rsuite.min.css";
+import AlbumPage from "./pages/AlbumPage";
 
 const App = () => {
   return (
@@ -12,7 +13,7 @@ const App = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="/albums" element={<Albums />} />
-        <Route path="/albums/:slug" element={<Albums />} />
+        <Route path="/albums/:slug" element={<AlbumPage />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

@@ -12,7 +12,7 @@ import Playlists from "../../components/Playlists";
 import { usePlayer } from "../../context/PlayerContext";
 import { Link } from "react-router-dom";
 import { useNotifications } from "../../context/NotificationContext";
-import { MAX_WIDTH } from "../../constants";
+
 const { Column, HeaderCell, Cell } = Table;
 
 const Home = () => {
@@ -54,7 +54,7 @@ const Home = () => {
 
   if (!data)
     return (
-      <Panel style={{ width: MAX_WIDTH }} bordered header={`Erreur`}>
+      <Panel bordered header={`Erreur`}>
         <p>{errorMessage}</p>
       </Panel>
     );

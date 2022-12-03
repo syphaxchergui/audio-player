@@ -2,7 +2,6 @@ import React from "react";
 import { Col, FlexboxGrid, Panel } from "rsuite";
 import Album from "../../components/Album";
 import Loading from "../../components/Loading";
-import { MAX_WIDTH } from "../../constants";
 import { useNotifications } from "../../context/NotificationContext";
 import ApiMiddleware from "../../core/API";
 
@@ -42,7 +41,7 @@ const Albums = () => {
 
   if (!data)
     return (
-      <Panel style={{ width: MAX_WIDTH }} bordered header={`Erreur`}>
+      <Panel bordered header={`Erreur`}>
         <p>{errorMessage}</p>
       </Panel>
     );

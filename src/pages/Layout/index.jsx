@@ -18,7 +18,9 @@ const Layout = () => {
         style={{
           padding: "1rem",
           maxWidth: MAX_WIDTH,
-          margin: "0 auto",
+          alignSelf: "center",
+          width: "100%",
+          flexGrow: 1,
           marginBottom: "6rem",
           marginTop: 80,
         }}

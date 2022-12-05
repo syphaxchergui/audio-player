@@ -4,11 +4,17 @@ import ReactAudioPlayer from "react-audio-player";
 import ApiMiddleware from "../../core/API";
 import { Loader } from "rsuite";
 import "./style.css";
+import { ButtonGroup, IconButton } from "rsuite";
+import ArrowRightIcon from "@rsuite/icons/ArrowRight";
+import ArrowLeftIcon from "@rsuite/icons/ArrowLeft";
+import { usePlayer } from "../../context/PlayerContext";
+import { Tooltip, Whisper, Button, ButtonToolbar } from "rsuite";
 
 const Player = ({ id }) => {
   const [data, setData] = React.useState();
   const [album, setAlbum] = React.useState();
   const [canPlay, setCanPlay] = React.useState(false);
+  const { actions: player } = usePlayer();
 
   React.useEffect(() => {
     const getData = async () => {
@@ -37,12 +43,42 @@ const Player = ({ id }) => {
         style={{
           display: "flex",
           flexDirection: "column",
-          marginRight: "2rem",
+          marginRight: "1rem",
         }}
       >
-        <h6>{data.filename}</h6>
-        <p>{album.artistId.firstName + " " + album.artistId.lastName}</p>
+        <Whisper
+          placement="top"
+          controlId="control-id-hover"
+          trigger="hover"
+          speaker={<Tooltip>{data.filename}</Tooltip>}
+        >
+          <h6
+            style={{
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              width: "10rem",
+            }}
+          >
+            {data.filename}
+          </h6>
+        </Whisper>
+
+        <p
+          style={{
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            width: "9rem",
+          }}
+        >
+          {album.artistId.firstName + " " + album.artistId.lastName}
+        </p>
       </div>
+      <ButtonGroup size="lg" style={{ marginRight: 16 }}>
+        <IconButton size="lg" icon={<ArrowLeftIcon />} onClick={player.prev} />
+        <IconButton size="lg" icon={<ArrowRightIcon />} onClick={player.next} />
+      </ButtonGroup>
       <ReactAudioPlayer
         src={`http://localhost:5000/api/tracks/${id}`}
         controls={canPlay}

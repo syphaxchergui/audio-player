@@ -61,6 +61,15 @@ const AlbumPage = () => {
     getData();
   }, []);
 
+  const onPlay = () => {
+    let tracksIds;
+    if (tracks.length > 0) {
+      tracksIds = tracks.map((item) => item._id);
+      player.setTracks(tracksIds);
+      player.playTrack(tracksIds[0]);
+    }
+  };
+
   if (loading) return <Loading />;
 
   if (!data)
@@ -98,6 +107,8 @@ const AlbumPage = () => {
               appearance="primary"
               icon={<PlayOutlineIcon />}
               placement="right"
+              disabled={!tracks || tracks.length === 0}
+              onClick={onPlay}
             >
               Play
             </IconButton>

@@ -5,7 +5,9 @@ import ReactAudioPlayer from "react-audio-player";
 import ApiMiddleware from "../../core/API";
 import "./home.css";
 import Player from "../../components/Player";
+import GearIcon from "@rsuite/icons/Gear";
 import { IconButton, Table, Grid, Row, Col, FlexboxGrid, Panel } from "rsuite";
+
 import PlayIcon from "@rsuite/icons/legacy/Play";
 import Loading from "../../components/Loading";
 import Playlists from "../../components/Playlists";
@@ -20,18 +22,28 @@ const Home = () => {
   const [track, setTrack] = React.useState();
   const [loading, setLoading] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState();
-  const { actions: player } = usePlayer();
+  const { trackId, actions: player } = usePlayer();
   const { actions: notify } = useNotifications();
 
   React.useEffect(() => {
+    const setFirstPlaylist = (tracks) => {
+      let tracksIds = [];
+      if (tracks.length) {
+        tracksIds = tracks.map((item) => item._id);
+        //console.log(tracksIds);
+        player.setTracks(tracksIds);
+      }
+    };
     const getData = async () => {
       try {
         setLoading(true);
         const result = await ApiMiddleware.get("explore");
-        console.log(result);
+        //console.log(result);
         if (result.data.success) {
           setData(result.data);
           //notify.success(result.data.message);
+          setFirstPlaylist(result.data.tracks);
+          //console.log(result.data.tracks);
         } else {
           notify.info(result.data.message);
           setErrorMessage(
@@ -74,19 +86,23 @@ const Home = () => {
               }}
             >
               {/* <Column width={60}>
-              <HeaderCell>Play</HeaderCell>
-              <Cell>
-                {(rowData) => (
-                  <IconButton
-                    size="xs"
-                    icon={<PlayIcon />}
-                    onClick={() => {
-                      setTrack(rowData._id);
-                    }}
-                  />
-                )}
-              </Cell>
-            </Column> */}
+                <HeaderCell>Play</HeaderCell>
+                <Cell>
+                  {(rowData) =>
+                    trackId === rowData._id ? (
+                      <IconButton size="xs" icon={<GearIcon spin />} />
+                    ) : (
+                      <IconButton
+                        size="xs"
+                        icon={<PlayIcon />}
+                        onClick={() => {
+                          setTrack(rowData._id);
+                        }}
+                      />
+                    )
+                  }
+                </Cell>
+              </Column> */}
               <Column flexGrow={1}>
                 <HeaderCell>Titre</HeaderCell>
                 <Cell dataKey="filename" />

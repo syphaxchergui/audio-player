@@ -10,7 +10,7 @@ import { IconButton, Table, Grid, Row, Col, FlexboxGrid, Panel } from "rsuite";
 
 import PlayIcon from "@rsuite/icons/legacy/Play";
 import Loading from "../../components/Loading";
-import Playlists from "../../components/Playlists";
+import Artists from "../../components/Artists";
 import { usePlayer } from "../../context/PlayerContext";
 import { Link } from "react-router-dom";
 import { useNotifications } from "../../context/NotificationContext";
@@ -28,7 +28,7 @@ const Home = () => {
   React.useEffect(() => {
     const setFirstPlaylist = (tracks) => {
       let tracksIds = [];
-      if (tracks.length) {
+      if (tracks) {
         tracksIds = tracks.map((item) => item._id);
         //console.log(tracksIds);
         player.setTracks(tracksIds);
@@ -43,7 +43,6 @@ const Home = () => {
           setData(result.data);
           //notify.success(result.data.message);
           setFirstPlaylist(result.data.tracks);
-          //console.log(result.data.tracks);
         } else {
           notify.info(result.data.message);
           setErrorMessage(
@@ -110,55 +109,22 @@ const Home = () => {
 
               <Column flexGrow={1}>
                 <HeaderCell>Album</HeaderCell>
-                <Cell>
-                  {(rowData) => (
-                    <p>
-                      {
-                        data.albums.filter(
-                          (item) => item._id === rowData.metadata.album
-                        )[0].title
-                      }
-                    </p>
-                  )}
-                </Cell>
+                <Cell dataKey="metadata.title" />
               </Column>
 
               <Column>
                 <HeaderCell>Annee</HeaderCell>
-                <Cell>
-                  {(rowData) => (
-                    <p>
-                      {
-                        data.albums.filter(
-                          (item) => item._id === rowData.metadata.album
-                        )[0].year
-                      }
-                    </p>
-                  )}
-                </Cell>
-              </Column>
-
-              <Column>
-                <HeaderCell>Artiste</HeaderCell>
-                <Cell>
-                  {(rowData) => (
-                    <p>
-                      {
-                        data.albums.filter(
-                          (item) => item._id === rowData.metadata.album
-                        )[0].artistId.lastName
-                      }
-                    </p>
-                  )}
-                </Cell>
+                <Cell dataKey="metadata.year" />
               </Column>
 
               <Column>
                 <HeaderCell>Taille</HeaderCell>
                 <Cell>
-                  {(rowData) => (
-                    <p>{Math.floor(rowData.length / (1024 * 1024))} Mo</p>
-                  )}
+                  {(rowData) =>
+                    rowData.length && (
+                      <p>{Math.floor(rowData.length / (1024 * 1024))} Mo</p>
+                    )
+                  }
                 </Cell>
               </Column>
             </Table>
@@ -166,7 +132,7 @@ const Home = () => {
         </Col>
         <Col sx={24} sm={24} md={24} lg={8}>
           <section className="section-r">
-            <Playlists className="horizontal-r" />
+            <Artists data={data.artists} className="horizontal-r" />
           </section>
         </Col>
       </Grid>

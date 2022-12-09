@@ -6,6 +6,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "rsuite/dist/rsuite.min.css";
 import AlbumPage from "./pages/AlbumPage";
+import Tracks from "./pages/Tracks";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path="/albums" element={<Albums />} />
         <Route path="/albums/:slug" element={<AlbumPage />} />
+        <Route path="/tracks" element={<Tracks />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

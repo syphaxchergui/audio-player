@@ -35,7 +35,8 @@ const Player = ({ id }) => {
   }, [id]);
 
   if (!id) return null;
-  if (!data || !album) return <Loader center content="loading" />;
+  if (!data || !album)
+    return <Loader center backdrop content="Chargement..." />;
   return (
     <div className="container">
       <img className="img-player" src={album.cover} alt={data.filename} />
